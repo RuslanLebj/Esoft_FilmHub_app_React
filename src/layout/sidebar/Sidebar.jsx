@@ -1,8 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { VideoCameraIcon } from '@heroicons/react/24/outline';
-import { ComputerDesktopIcon } from '@heroicons/react/24/outline';
-import { ViewfinderCircleIcon } from '@heroicons/react/24/outline';
 
 const Sidebar = ({ isOpen }) => {
     const menus = [

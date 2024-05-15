@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Bars3Icon, UserCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon } from '@heroicons/react/24/outline'
 import IconButton from '../../components/buttons/IconButton';
 
 
