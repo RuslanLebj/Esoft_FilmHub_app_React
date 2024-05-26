@@ -1,4 +1,3 @@
-// hooks/useFetchData.js
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import config from '../config.js'
@@ -11,16 +10,17 @@ const useFetch = (endpoint) => {
     useEffect(() => {
             const fetchData = async () => {
                 try {
-                    // console.log('API Key:',  import.meta.env.VITE_API_KEY);
+                    console.log('API Key:',  import.meta.env.VITE_API_KEY);
                     const response = await axios.get(`${config.apiUrl}${endpoint}`, {
                         headers: {
                             accept: 'application/json',
                             'X-API-KEY': import.meta.env.VITE_API_KEY
                         }
                     });
-                    setData(response.data);
+                    setData(response.data.docs);
+                    console.log('Response:',  response.data);
                 } catch (err) {
-                    // console.error('Error fetching data:', err);
+                    console.error('Error fetching data:', err);
                     setError('Failed to load data');
                 } finally {
                     setLoading(false);
