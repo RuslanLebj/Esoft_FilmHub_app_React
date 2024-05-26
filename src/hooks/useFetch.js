@@ -1,29 +1,37 @@
 // hooks/useFetchData.js
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import axios from 'axios';
+import config from '../config.js'
 
-const useFetch = (url) => {
+const useFetch = (endpoint) => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(url);
-                setData(response.data);
-            } catch (err) {
-                console.error('Error fetching data:', err);
-                setError('Failed to load data');
-            } finally {
-                setLoading(false);
-            }
-        };
+            const fetchData = async () => {
+                try {
+                    // console.log('API Key:',  import.meta.env.VITE_API_KEY);
+                    const response = await axios.get(`${config.apiUrl}${endpoint}`, {
+                        headers: {
+                            accept: 'application/json',
+                            'X-API-KEY': import.meta.env.VITE_API_KEY
+                        }
+                    });
+                    setData(response.data);
+                } catch (err) {
+                    // console.error('Error fetching data:', err);
+                    setError('Failed to load data');
+                } finally {
+                    setLoading(false);
+                }
+            };
 
-        fetchData().then(r => "");
-    }, [url]);
+            fetchData();
+        },
+        [endpoint]);
 
-    return { data, loading, error };
+    return {data, loading, error};
 };
 
 export default useFetch;
