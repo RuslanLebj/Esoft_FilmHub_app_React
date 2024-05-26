@@ -5,10 +5,10 @@ import IconButton from '../../components/buttons/IconButton';
 const Navbar = ({ toggleSidebar }) => {
 
   return (
-    <header className="sticky top-0 z-20 md:h-20 bg-white border-b md:flex md:items-center md:justify-between p-4 pb-0 shadow-md md:pb-4">
+    <header className="sticky z-20 bg-white border-b flex items-center justify-between p-4 shadow-md">
       {/* Button for sidebar and Logo text */}
       <nav>
-        <ul className="md:flex md:items-center">
+        <ul className="flex items-center">
           <li>
             <IconButton onClick={toggleSidebar}>
               <Bars3Icon className="h-7 w-7" />
@@ -26,7 +26,7 @@ const Navbar = ({ toggleSidebar }) => {
       {/* END Logo text or image */}
 
       {/* Search field */}
-      <form className="mb-4 w-full md:mb-0 md:w-1/4">
+      <form className="w-1/4">
         <label className="hidden" htmlFor="search-form">Search</label>
         <input className="bg-grey-lightest border-2 p-2 rounded-lg shadow-inner w-full" placeholder="Поиск" type="text" />
         <button className="hidden">Submit</button>
