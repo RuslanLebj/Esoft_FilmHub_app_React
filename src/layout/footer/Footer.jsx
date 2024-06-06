@@ -6,7 +6,7 @@ const Footer = () => {
         <footer
             className="bg-white text-center lg:text-left">
             {/* <!--Copyright section--> */}
-            <div className="bg-neutral-100 p-4 text-center">
+            <div className="bg-neutral-200 p-4 text-center">
                 <a className="text-neutral-800"> Open source client for Kinopoisk</a>
             </div>
         </footer>
