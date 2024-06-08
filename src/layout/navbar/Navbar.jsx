@@ -26,7 +26,7 @@ const Navbar = ({ toggleSidebar }) => {
       {/* END Logo text or image */}
 
       {/* Search field */}
-      <form className="w-1/4">
+      <form className="w-1/4 mr-4">
         <label className="hidden" htmlFor="search-form">Search</label>
         <input className="bg-grey-lightest border-2 p-2 rounded-lg shadow-inner w-full" placeholder="Поиск" type="text" />
         <button className="hidden">Submit</button>
