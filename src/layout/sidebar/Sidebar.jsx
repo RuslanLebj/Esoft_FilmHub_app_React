@@ -8,7 +8,7 @@ const Sidebar = ({isOpen}) => {
         {name: "Фильм 3", link: "/film3"},
     ];
     return (
-        <aside className="sticky top-20 h-screen z-10 flex">
+        <aside className="sticky top-20 h-screen z-10 flex shadow">
             <div
                 className={`bg-white ${isOpen ? "w-60 px-4" : "w-0 opacity-0 overflow-hidden"
                 } duration-500 text-black`}

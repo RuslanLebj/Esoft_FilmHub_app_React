@@ -5,7 +5,7 @@ import IconButton from '../../components/buttons/IconButton';
 const Navbar = ({ toggleSidebar }) => {
 
   return (
-    <header className="sticky z-20 bg-white border-b flex items-center justify-between p-4 shadow-md">
+    <header className="fixed z-20 bg-white border-b flex items-center justify-between p-4 shadow-md w-screen opacity-90">
       {/* Button for sidebar and Logo text */}
       <nav>
         <ul className="flex items-center">
