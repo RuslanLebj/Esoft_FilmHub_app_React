@@ -10,7 +10,7 @@ const MovieListPage = (filterValue) => {
     if (error) return <div>{error}</div>;
 
     return (
-        <div className="bg-gray-100 w-full min-h-screen gap-4 flex-wrap flex justify-center items-center p-4">
+        <div className="w-full min-h-screen gap-4 flex-wrap flex justify-center items-center p-4">
             <MovieList movieList={movieList} />
         </div>
     );
