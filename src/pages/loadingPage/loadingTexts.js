@@ -1,0 +1,1 @@
+export const loadingTexts = ["Loading.", "Loading..", "Loading..."];
