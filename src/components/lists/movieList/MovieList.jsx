@@ -1,12 +1,12 @@
 import MovieCard from "../../cards/movieCard/MovieCard.jsx";
 import MovieDetailPage from "../../../pages/movieDetailPage/MovieDetailPage.jsx";
 
-const MovieList = ({movieList}) => {
+const MovieList = ({movies}) => {
     // Деструктуризируем movieList из пропсов
 
     return (
         <>
-            {movieList.map(movie => (
+            {movies.map(movie => (
                 <MovieCard key={movie.id} movie={movie}/>
             ))}
         </>
