@@ -6,12 +6,12 @@ import ErrorPage from "../errorPage/ErrorPage.jsx";
 import { useSelector } from "react-redux";
 
 const MovieListPage = (filterValue) => {
-    useFetch(`/movie?limit=100`);
+    useFetch(`/movie?limit=100`); // Получим страницу со 100 элементами
     const { error, loading, data: movies } = useSelector((state) => state.movies);
     console.log('Movies data from store:',  movies);
 
     if (loading) return <LoadingPage/>;
-    if (loading) return <ErrorPage errorMessage={error} />;
+    if (error) return <ErrorPage errorMessage={error} />;
 
     return (
         <div className="w-full min-h-screen gap-4 flex-wrap flex justify-center items-center p-4">
