@@ -1,14 +1,16 @@
-import useFetch from "../../hooks/useFetch.js";
+import {useEffect} from 'react';
 import MovieList from "../../components/lists/movieList/MovieList.jsx";
-import MovieDetailPage from "../movieDetailPage/MovieDetailPage.jsx";
 import LoadingPage from "../loadingPage/LoadingPage.jsx";
 import ErrorPage from "../errorPage/ErrorPage.jsx";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMovies } from "../../store/slices/moviesSlice.js"
 
 const MovieListPage = (filterValue) => {
-    useFetch(`/movie?limit=100`); // Получим страницу со 100 элементами
-    const { error, loading, data: movies } = useSelector((state) => state.movies);
-    console.log('Movies data from store:',  movies);
+    const dispatch = useDispatch();
+    const { data: movies, loading, error, } = useSelector((state) => state.movies);
+    useEffect(() => {
+        dispatch(fetchMovies());
+    }, []);
 
     if (loading) return <LoadingPage/>;
     if (error) return <ErrorPage errorMessage={error} />;

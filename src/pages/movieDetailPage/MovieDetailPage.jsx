@@ -1,9 +1,9 @@
-import useFetch from "../../hooks/useFetch.js";
 import {useParams} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const MovieDetailPage = () => {
     const {id} = useParams(); // Извлечение ID из URL
-    const {data: movie, loading, error} = useFetch(`/movie/${id}/`);
+    const { data: movies, loading, error, } = useSelector((state) => state.movies);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
