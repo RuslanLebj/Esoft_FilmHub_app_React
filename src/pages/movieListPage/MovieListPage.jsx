@@ -8,7 +8,7 @@ import PageTitle from "../../components/titles/pageTitle/PageTitle.jsx";
 
 const MovieListPage = () => {
     const dispatch = useDispatch();
-    const {data: movies, loading, error, filters} = useSelector((state) => state.movies);
+    const {data: movies, loading, error, filters, movie_list_name} = useSelector((state) => state.movies);
 
     useEffect(() => {
         dispatch(fetchMovies(filters));
@@ -20,7 +20,7 @@ const MovieListPage = () => {
     return (
         <>
             <div className="my-3 mx-10">
-                <PageTitle> 250 лучших фильмов </PageTitle>
+                <PageTitle> {movie_list_name} </PageTitle>
             </div>
             <MovieList movies={movies}/>
         </>

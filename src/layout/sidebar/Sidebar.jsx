@@ -1,6 +1,6 @@
 import React from "react";
 import {useDispatch, useSelector} from 'react-redux';
-import {setFilters} from "../../store/slices/moviesSlice.js";
+import {setFilters, setMovieListName} from "../../store/slices/moviesSlice.js";
 
 const Sidebar = ({isOpen}) => {
     const dispatch = useDispatch();
@@ -12,7 +12,8 @@ const Sidebar = ({isOpen}) => {
         {name: "Посмотреть позже", filters: {id: watch_later}}
     ];
 
-    const handleMenuClick = (filters) => {
+    const handleMenuClick = (name, filters) => {
+        dispatch(setMovieListName(name))
         dispatch(setFilters(filters));
     };
 
@@ -31,7 +32,7 @@ const Sidebar = ({isOpen}) => {
                             key={i}
                             className={"flex items-center text-md gap-7 font-medium p-2 hover:bg-gray-200 rounded-md whitespace-pre duration-300"}
                             /* whitespace-pre здесь необходим, чтобы во время развертывания сайдбара текст содержащий пробел не делился на строки */
-                            onClick={() => handleMenuClick(menu.filters)}
+                            onClick={() => handleMenuClick(menu.name, menu.filters)}
                         >
                             {/* Надпись в сайдбаре */}
                             <h2>

@@ -54,7 +54,8 @@ const initialState = {
     error: null,
     favorites: [],
     watch_later: [],
-    filters: {limit: "250", lists: 'top250'}
+    filters: {limit: "250", lists: 'top250'},
+    movie_list_name: "Популярные"
 };
 
 const moviesSlice = createSlice({
@@ -91,6 +92,9 @@ const moviesSlice = createSlice({
             },
             setFilters: (state, action) => {
                 state.filters = action.payload;
+            },
+            setMovieListName: (state, action) => {
+                state.movie_list_name = action.payload;
             }
         },
         // extraReducers:
@@ -124,7 +128,8 @@ export const {
     removeFromFavorites,
     addToWatchLater,
     removeFromWatchLater,
-    setFilters
+    setFilters,
+    setMovieListName
 } = moviesSlice.actions;
 
 export default moviesSlice.reducer;
