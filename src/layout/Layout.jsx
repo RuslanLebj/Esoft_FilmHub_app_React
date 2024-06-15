@@ -16,7 +16,7 @@ const Layout = () => {
             <Navbar toggleSidebar={toggleSidebar} />
             <div className="flex">
                 <Sidebar isOpen={isSidebarOpen} />
-                <main className="pt-20 bg-gray-100">
+                <main className="pt-20 bg-gray-100 w-full">
                     <Outlet />
                 </main>
             </div>
