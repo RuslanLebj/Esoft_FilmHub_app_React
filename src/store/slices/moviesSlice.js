@@ -1,19 +1,12 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import axios from 'axios';
-import config from '../../config.js'
+import axiosInstance from "../../utils/axiosInstance.js";
 
 
 const fetchPopularMovies = createAsyncThunk(
     'movies/fetch',
     async () => {
         console.log('API Key:', import.meta.env.VITE_API_KEY);
-        const response = await axios.get(`${config.apiUrl}/movie?limit=250&lists=top250`, // Возьмем 250 фильмов из списка лучшие 250
-            {
-                headers: {
-                    accept: 'application/json',
-                    'X-API-KEY': import.meta.env.VITE_API_KEY
-                }
-            });
+        const response = await axiosInstance.get('/movie?limit=250&lists=top250'); // Возьмем 250 фильмов из списка лучшие 250
         console.log('Response:', response.data);
         return await response.data.docs;
     }
