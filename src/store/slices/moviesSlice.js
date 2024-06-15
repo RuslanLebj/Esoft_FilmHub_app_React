@@ -2,15 +2,36 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axiosInstance from "../../utils/axiosInstance.js";
 
 
-const fetchPopularMovies = createAsyncThunk(
+const fetchMovies = createAsyncThunk(
     'movies/fetch',
-    async () => {
+    async (filters) => {
         console.log('API Key:', import.meta.env.VITE_API_KEY);
-        const response = await axiosInstance.get('/movie?limit=250&lists=top250'); // Возьмем 250 фильмов из списка лучшие 250
+
+        // Создаем объект URLSearchParams для построения строки параметров запроса
+        const params = new URLSearchParams();
+
+        // Перебираем все ключи в объекте filters
+        Object.keys(filters).forEach(key => {
+            // Если значение ключа является массивом, добавляем каждый элемент массива как отдельный параметр запроса
+            if (Array.isArray(filters[key])) {
+                filters[key].forEach(value => params.append(key, value));
+            } else {
+                // Иначе добавляем ключ и значение как один параметр запроса
+                params.append(key, filters[key]);
+            }
+        });
+
+        // Выполняем GET-запрос с построенной строкой параметров
+        const response = await axiosInstance.get(`/movie?${params.toString()}`);
+
         console.log('Response:', response.data);
-        return await response.data.docs;
+        return response.data.docs;
     }
 );
+// filters могут быть как одиночные значения (например, limit: "250", lists: 'top250'), так и массивы (например, id: [1, 2, 3]).
+// Если значение ключа в filters является массивом, каждый элемент этого массива добавляется в строку параметров запроса отдельно (например, id=1&id=2&id=3).
+// Если значение ключа не является массивом, добавляем его как одиночный параметр.
+// *Эта фича будет полезна в рамках поиска фильмов с определенный id из избранного и поиска фильмов по нескольким жанрам
 
 // Имитация запроса на обновление данных
 const updateMovie = createAsyncThunk(
@@ -32,7 +53,8 @@ const initialState = {
     data: [],
     error: null,
     favorites: [],
-    watch_later: []
+    watch_later: [],
+    filters: {limit: "250", lists: 'top250'}
 };
 
 const moviesSlice = createSlice({
@@ -66,6 +88,9 @@ const moviesSlice = createSlice({
                 const movieId = action.payload;
                 state.watch_later = state.watch_later.filter(id => id !== movieId);
                 console.log(`Movie with id ${movieId} removed from watch later`,);
+            },
+            setFilters: (state, action) => {
+                state.filters = action.payload;
             }
         },
         // extraReducers:
@@ -74,16 +99,16 @@ const moviesSlice = createSlice({
         // Примеры: обработка состояний pending, fulfilled и rejected для асинхронных запросов.
         extraReducers: (builder) => {
             builder
-                .addCase(fetchPopularMovies.pending, (state) => {
+                .addCase(fetchMovies.pending, (state) => {
                     state.loading = true;
                     state.error = null;
                 })
-                .addCase(fetchPopularMovies.fulfilled, (state, action) => {
+                .addCase(fetchMovies.fulfilled, (state, action) => {
                     state.loading = false;
                     state.data = action.payload;
                     console.log('Movies data from store:', state.data);
                 })
-                .addCase(fetchPopularMovies.rejected, (state, action) => {
+                .addCase(fetchMovies.rejected, (state, action) => {
                     state.loading = false;
                     state.error = action.error.message;
                     console.error('Error fetching data:', state.error);
@@ -92,13 +117,14 @@ const moviesSlice = createSlice({
     }
 );
 
-export {fetchPopularMovies, updateMovie};
+export {fetchMovies, updateMovie};
 
 export const {
     addToFavorites,
     removeFromFavorites,
     addToWatchLater,
-    removeFromWatchLater
+    removeFromWatchLater,
+    setFilters
 } = moviesSlice.actions;
 
 export default moviesSlice.reducer;
