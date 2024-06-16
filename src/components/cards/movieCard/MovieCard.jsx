@@ -10,6 +10,7 @@ import {
 } from "../../../store/slices/moviesSlice.js"
 import {HeartIcon as OutlineHeartIcon, BookmarkIcon as OutlineBookmarkIcon} from '@heroicons/react/24/outline'
 import {HeartIcon as SolidHeartIcon, BookmarkIcon as SolidBookmarkIcon} from '@heroicons/react/24/solid'
+import {Link} from 'react-router-dom';
 
 const MAX_GENRES_DISPLAY = 4; // Константа для максимального количества выводимых кнопок с жанрами
 
@@ -56,9 +57,11 @@ const MovieCard = ({movie}) => {
             <img className="rounded-xl h-96" src={posterUrl} alt={name}/>
             <div className="p-2">
                 {/* Name */}
-                <h2 className="font-bold text-lg mb-2 line-clamp-1">
-                    {name}
-                </h2>
+                <Link to={`/movies/${movie.id}`}>
+                    <h2 className="font-bold text-lg mb-2 line-clamp-1">
+                        {name}
+                    </h2>
+                </Link>
                 {/* Rating */}
                 <h2 className="font-bold text-sm mb-2 line-clamp-1 text-right text-yellow-500">
                     {rating}

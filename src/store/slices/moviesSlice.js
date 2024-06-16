@@ -31,7 +31,18 @@ const fetchMovies = createAsyncThunk(
 // filters могут быть как одиночные значения (например, limit: "250", lists: 'top250'), так и массивы (например, id: [1, 2, 3]).
 // Если значение ключа в filters является массивом, каждый элемент этого массива добавляется в строку параметров запроса отдельно (например, id=1&id=2&id=3).
 // Если значение ключа не является массивом, добавляем его как одиночный параметр.
-// *Эта фича будет полезна в рамках поиска фильмов с определенный id из избранного и поиска фильмов по нескольким жанрам
+// *Эта фича будет полезна в рамках поиска фильмов с набором id из favorite/watch_later и поиска фильмов по нескольким жанрам
+
+
+// Функция для фетчинга информации об одном фильме по его id
+const fetchMovieById = createAsyncThunk(
+    'movies/fetchById',
+    async (movieId) => {
+        const response = await axiosInstance.get(`/movie/${movieId}`);
+        return response.data;
+    }
+);
+
 
 // Имитация запроса на обновление данных
 const updateMovie = createAsyncThunk(
@@ -55,7 +66,8 @@ const initialState = {
     favorites: [],
     watch_later: [],
     filters: {limit: "250", lists: 'top250'},
-    movie_list_name: "Популярные"
+    movie_list_name: "Популярные",
+    current_movie: []
 };
 
 const moviesSlice = createSlice({
@@ -116,12 +128,26 @@ const moviesSlice = createSlice({
                     state.loading = false;
                     state.error = action.error.message;
                     console.error('Error fetching data:', state.error);
+                })
+                .addCase(fetchMovieById.pending, (state) => {
+                    state.loading = true;
+                    state.error = null;
+                })
+                .addCase(fetchMovieById.fulfilled, (state, action) => {
+                    state.loading = false;
+                    state.current_movie = action.payload;
+                    console.log('Movie data from store:', state.data);
+                })
+                .addCase(fetchMovieById.rejected, (state, action) => {
+                    state.loading = false;
+                    state.error = action.error.message;
+                    console.error('Error fetching data:', state.error);
                 });
         }
     }
 );
 
-export {fetchMovies, updateMovie};
+export {fetchMovies, updateMovie, fetchMovieById};
 
 export const {
     addToFavorites,
