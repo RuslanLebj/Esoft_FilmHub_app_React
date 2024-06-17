@@ -49,7 +49,8 @@ const fetchMoviesByName = createAsyncThunk(
     'movies/fetchByName',
     async (movieName) => {
         const response = await axiosInstance.get(`/movie/search?page=1&limit=10&query=${movieName}`);
-        return response.data;
+        console.log(`Request: /movie/search?page=1&limit=10&query=${movieName}`);
+        return response.data.docs;
     }
 );
 
@@ -79,6 +80,29 @@ const initialState = {
     movie_list_name: "Популярные",
     current_movie: [],
     comments: [],
+    genre_options: [
+        {value: 'аниме', label: 'Аниме'},
+        {value: 'биография', label: 'Биография'},
+        {value: 'боевик', label: 'Боевик'},
+        {value: 'вестерн', label: 'Вестерн'},
+        {value: 'военный', label: 'Военный'},
+        {value: 'детектив', label: 'Детектив'},
+        {value: 'документальный', label: 'Документальный'},
+        {value: 'драма', label: 'Драма'},
+        {value: 'история', label: 'История'},
+        {value: 'комедия', label: 'Комедия'},
+        {value: 'криминал', label: 'Криминал'},
+        {value: 'мелодрама', label: 'Мелодрама'},
+        {value: 'мультфильм', label: 'Мультфильм'},
+        {value: 'музыка', label: 'Музыка'},
+        {value: 'приключения', label: 'Приключения'},
+        {value: 'семейный', label: 'Семейный'},
+        {value: 'спорт', label: 'Спорт'},
+        {value: 'триллер', label: 'Триллер'},
+        {value: 'ужасы', label: 'Ужасы'},
+        {value: 'фантастика', label: 'Фантастика'},
+        {value: 'фэнтези', label: 'Фэнтези'}
+    ]
 };
 
 const moviesSlice = createSlice({
@@ -173,7 +197,7 @@ const moviesSlice = createSlice({
                 })
                 .addCase(fetchMoviesByName.fulfilled, (state, action) => {
                     state.loading = false;
-                    state.current_movie = action.payload;
+                    state.data = action.payload;
                     console.log('Movie data from store:', state.data);
                 })
                 .addCase(fetchMoviesByName.rejected, (state, action) => {
