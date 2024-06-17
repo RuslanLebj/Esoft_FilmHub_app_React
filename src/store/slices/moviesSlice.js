@@ -155,6 +155,9 @@ const moviesSlice = createSlice({
                 if (state.comments[movieId]) {
                     state.comments[movieId] = state.comments[movieId].filter(comment => comment.id !== commentId);
                 }
+            },
+            sortMoviesByRating: (state) => {
+                state.data.sort((a, b) => b.rating.imdb - a.rating.imdb);
             }
         },
         // extraReducers:
@@ -219,7 +222,8 @@ export const {
     setFilters,
     setMovieListName,
     addComment,
-    removeComment
+    removeComment,
+    sortMoviesByRating
 } = moviesSlice.actions;
 
 export default moviesSlice.reducer;

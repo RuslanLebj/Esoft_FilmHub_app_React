@@ -1,7 +1,7 @@
 import {Bars3Icon} from '@heroicons/react/24/outline'
 import IconButton from '../../components/buttons/IconButton';
 import {useForm} from 'react-hook-form';
-import {fetchMoviesByName, setMovieListName, setFilters} from "../../store/slices/moviesSlice.js";
+import {fetchMoviesByName, setMovieListName, setFilters, sortMoviesByRating} from "../../store/slices/moviesSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import Select from 'react-select';
 
@@ -22,9 +22,13 @@ const Navbar = ({toggleSidebar}) => {
     const handleSearchByGenres = (selectedGenres) => {
         const genres = selectedGenres.map(genre => genre.value);
         console.log("Genres:", genres)
-        const filters = { limit: '25', 'genres.name': genres };
+        const filters = {limit: '25', 'genres.name': genres};
         dispatch(setFilters(filters));
         dispatch(setMovieListName("Поиск по жанрам"));
+    };
+
+    const handleSortByRating = () => {
+        dispatch(sortMoviesByRating());
     };
 
     return (
@@ -74,6 +78,15 @@ const Navbar = ({toggleSidebar}) => {
                 />
             </div>
             {/* END Search by genres field */}
+
+            {/* Search by imdb rating */}
+            <button
+                onClick={handleSortByRating}
+                className="bg-blue-500 text-white px-4 py-2 rounded ml-4 "
+            >
+                Сортировать по рейтингу
+            </button>
+            {/* END sort by imdb rating */}
 
         </header>
     );
