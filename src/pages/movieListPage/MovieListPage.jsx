@@ -10,6 +10,7 @@ const MovieListPage = () => {
     const dispatch = useDispatch();
     const {data: movies, loading, error, filters, movie_list_name} = useSelector((state) => state.movies);
 
+    // Первоначальная загрузка фильмов и загрузка фильмов при изменении фильтров
     useEffect(() => {
         dispatch(fetchMovies(filters));
     }, [filters]); // Добавляем filters в зависимости, чтобы обновлять список при каждом изменении фильтров
