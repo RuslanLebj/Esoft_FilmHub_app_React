@@ -43,6 +43,15 @@ const fetchMovieById = createAsyncThunk(
     }
 );
 
+// Функция для фетчинга информации о фильмах по названию
+const fetchMoviesByName = createAsyncThunk(
+    'movies/fetchByName',
+    async (movieName) => {
+        const response = await axiosInstance.get(`/movie/search?page=1&limit=10&query=${movieName}`);
+        return response.data;
+    }
+);
+
 
 // Имитация запроса на обновление данных
 const updateMovie = createAsyncThunk(
@@ -156,12 +165,26 @@ const moviesSlice = createSlice({
                     state.loading = false;
                     state.error = action.error.message;
                     console.error('Error fetching data:', state.error);
+                })
+                .addCase(fetchMoviesByName.pending, (state) => {
+                    state.loading = true;
+                    state.error = null;
+                })
+                .addCase(fetchMoviesByName.fulfilled, (state, action) => {
+                    state.loading = false;
+                    state.current_movie = action.payload;
+                    console.log('Movie data from store:', state.data);
+                })
+                .addCase(fetchMoviesByName.rejected, (state, action) => {
+                    state.loading = false;
+                    state.error = action.error.message;
+                    console.error('Error fetching data:', state.error);
                 });
         }
     }
 );
 
-export {fetchMovies, updateMovie, fetchMovieById};
+export {fetchMovies, updateMovie, fetchMovieById, fetchMoviesByName};
 
 export const {
     addToFavorites,
