@@ -24,8 +24,9 @@ const fetchMovies = createAsyncThunk(
         // Выполняем GET-запрос с построенной строкой параметров
         const response = await axiosInstance.get(`/movie?${params.toString()}`);
 
+        console.log(`Request: /movie?${params.toString()}`);
         console.log('Response:', response.data);
-        return response.data.docs;
+        return await response.data.docs;
     }
 );
 // filters могут быть как одиночные значения (например, limit: "250", lists: 'top250'), так и массивы (например, id: [1, 2, 3]).
@@ -77,7 +78,7 @@ const initialState = {
     filters: {limit: "250", lists: 'top250'},
     movie_list_name: "Популярные",
     current_movie: [],
-    comments: {},
+    comments: [],
 };
 
 const moviesSlice = createSlice({
@@ -159,7 +160,7 @@ const moviesSlice = createSlice({
                 .addCase(fetchMovieById.fulfilled, (state, action) => {
                     state.loading = false;
                     state.current_movie = action.payload;
-                    console.log('Movie data from store:', state.data);
+                    console.log('Movie data from store:', state.current_movie);
                 })
                 .addCase(fetchMovieById.rejected, (state, action) => {
                     state.loading = false;
