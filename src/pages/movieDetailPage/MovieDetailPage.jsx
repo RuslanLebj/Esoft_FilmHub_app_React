@@ -4,6 +4,10 @@ import {fetchMovieById, fetchMovies} from "../../store/slices/moviesSlice.js";
 import LoadingPage from "../loadingPage/LoadingPage.jsx";
 import ErrorPage from "../errorPage/ErrorPage.jsx";
 import {useEffect} from "react";
+import commentsDashboard from "../../components/sections/commentsSection/CommentsSection.jsx";
+import CommentForm from "../../components/forms/commentForm/CommentForm.jsx";
+import CommentsSection from "../../components/sections/commentsSection/CommentsSection.jsx";
+import PageTitle from "../../components/titles/pageTitle/PageTitle.jsx";
 
 const MovieDetailPage = () => {
     const {id} = useParams(); // Извлечение ID из URL
@@ -19,8 +23,11 @@ const MovieDetailPage = () => {
     if (error) return <ErrorPage errorMessage={error}/>;
 
     return (
-        <div className="min-h-screen">
-        </div>
+        <>
+            <div className="min-h-screen">
+                <CommentsSection movieId={id}/>
+            </div>
+        </>
     );
 };
 
