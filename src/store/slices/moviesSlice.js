@@ -67,7 +67,8 @@ const initialState = {
     watch_later: [],
     filters: {limit: "250", lists: 'top250'},
     movie_list_name: "Популярные",
-    current_movie: []
+    current_movie: [],
+    comments: {},
 };
 
 const moviesSlice = createSlice({
@@ -107,6 +108,19 @@ const moviesSlice = createSlice({
             },
             setMovieListName: (state, action) => {
                 state.movie_list_name = action.payload;
+            },
+            addComment: (state, action) => {
+                const {movieId, comment} = action.payload;
+                if (!state.comments[movieId]) {
+                    state.comments[movieId] = [];
+                }
+                state.comments[movieId].push(comment);
+            },
+            removeComment: (state, action) => {
+                const {movieId, commentId} = action.payload;
+                if (state.comments[movieId]) {
+                    state.comments[movieId] = state.comments[movieId].filter(comment => comment.id !== commentId);
+                }
             }
         },
         // extraReducers:
@@ -155,7 +169,9 @@ export const {
     addToWatchLater,
     removeFromWatchLater,
     setFilters,
-    setMovieListName
+    setMovieListName,
+    addComment,
+    removeComment
 } = moviesSlice.actions;
 
 export default moviesSlice.reducer;
