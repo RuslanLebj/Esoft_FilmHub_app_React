@@ -22,7 +22,7 @@ const MovieDetailPage = () => {
             const movieResponse = await dispatch(fetchMovieById(id)).unwrap();
             // Преобразование жанров из объектов в строки
             const genres = movieResponse.genres ? movieResponse.genres.map((genre) => genre.name) : [];
-            console.log("Genres:", genres)
+            // console.log("Genres:", genres)
             const filters = { limit: '4', 'genres.name': genres };
             // Последовательный dispatch: Второй dispatch для получения связанных фильмов вызывается только после того, как данные о фильме (и жанры) будут доступны.
             await dispatch(fetchMovies(filters));

@@ -6,7 +6,7 @@ const GenreList = ({genres}) => {
     const dispatch = useDispatch();
 
     const handleSearchByGenre = (genre) => {
-        console.log("Genre:", genre)
+        // console.log("Genre:", genre)
         const filters = {limit: '25', 'genres.name': genre};
         dispatch(setFilters(filters));
         dispatch(setMovieListName(`Жанр: ${genre}`));

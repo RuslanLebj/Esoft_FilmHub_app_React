@@ -21,7 +21,7 @@ const Navbar = ({toggleSidebar}) => {
 
     const handleSearchByGenres = (selectedGenres) => {
         const genres = selectedGenres.map(genre => genre.value);
-        console.log("Genres:", genres)
+        // console.log("Genres:", genres)
         const filters = {limit: '25', 'genres.name': genres};
         dispatch(setFilters(filters));
         dispatch(setMovieListName("Поиск по жанрам"));

@@ -5,7 +5,7 @@ import axiosInstance from "../../utils/axiosInstance.js";
 const fetchMovies = createAsyncThunk(
     'movies/fetch',
     async (filters) => {
-        console.log('API Key:', import.meta.env.VITE_API_KEY);
+        // console.log('API Key:', import.meta.env.VITE_API_KEY);
 
         // Создаем объект URLSearchParams для построения строки параметров запроса
         const params = new URLSearchParams();
@@ -24,8 +24,8 @@ const fetchMovies = createAsyncThunk(
         // Выполняем GET-запрос с построенной строкой параметров
         const response = await axiosInstance.get(`/movie?${params.toString()}`);
 
-        console.log(`Request: /movie?${params.toString()}`);
-        console.log('Response:', response.data);
+        // console.log(`Request: /movie?${params.toString()}`);
+        // console.log('Response:', response.data);
         return await response.data.docs;
     }
 );
@@ -49,7 +49,7 @@ const fetchMoviesByName = createAsyncThunk(
     'movies/fetchByName',
     async (movieName) => {
         const response = await axiosInstance.get(`/movie/search?page=1&limit=10&query=${movieName}`);
-        console.log(`Request: /movie/search?page=1&limit=10&query=${movieName}`);
+        // console.log(`Request: /movie/search?page=1&limit=10&query=${movieName}`);
         return response.data.docs;
     }
 );
@@ -118,24 +118,24 @@ const moviesSlice = createSlice({
                 if (!state.favorites.includes(movieId)) {
                     state.favorites.push(movieId);
                 }
-                console.log(`Movie with id ${movieId} added to favorites`,);
+                // console.log(`Movie with id ${movieId} added to favorites`,);
             },
             removeFromFavorites: (state, action) => {
                 const movieId = action.payload;
                 state.favorites = state.favorites.filter(id => id !== movieId);
-                console.log(`Movie with id ${movieId} removed from favorites`,);
+                // console.log(`Movie with id ${movieId} removed from favorites`,);
             },
             addToWatchLater: (state, action) => {
                 const movieId = action.payload;
                 if (!state.watch_later.includes(movieId)) {
                     state.watch_later.push(movieId);
                 }
-                console.log(`Movie with id ${movieId} added to watch later`,);
+                // console.log(`Movie with id ${movieId} added to watch later`,);
             },
             removeFromWatchLater: (state, action) => {
                 const movieId = action.payload;
                 state.watch_later = state.watch_later.filter(id => id !== movieId);
-                console.log(`Movie with id ${movieId} removed from watch later`,);
+                // console.log(`Movie with id ${movieId} removed from watch later`,);
             },
             setFilters: (state, action) => {
                 state.filters = action.payload;
@@ -173,12 +173,12 @@ const moviesSlice = createSlice({
                 .addCase(fetchMovies.fulfilled, (state, action) => {
                     state.loading = false;
                     state.data = action.payload;
-                    console.log('Movies data from store:', state.data);
+                    // console.log('Movies data from store:', state.data);
                 })
                 .addCase(fetchMovies.rejected, (state, action) => {
                     state.loading = false;
                     state.error = action.error.message;
-                    console.error('Error fetching data:', state.error);
+                    // console.error('Error fetching data:', state.error);
                 })
                 .addCase(fetchMovieById.pending, (state) => {
                     state.loading = true;
@@ -187,12 +187,12 @@ const moviesSlice = createSlice({
                 .addCase(fetchMovieById.fulfilled, (state, action) => {
                     state.loading = false;
                     state.current_movie = action.payload;
-                    console.log('Movie data from store:', state.current_movie);
+                    // console.log('Movie data from store:', state.current_movie);
                 })
                 .addCase(fetchMovieById.rejected, (state, action) => {
                     state.loading = false;
                     state.error = action.error.message;
-                    console.error('Error fetching data:', state.error);
+                    // console.error('Error fetching data:', state.error);
                 })
                 .addCase(fetchMoviesByName.pending, (state) => {
                     state.loading = true;
@@ -201,12 +201,12 @@ const moviesSlice = createSlice({
                 .addCase(fetchMoviesByName.fulfilled, (state, action) => {
                     state.loading = false;
                     state.data = action.payload;
-                    console.log('Movie data from store:', state.data);
+                    // console.log('Movie data from store:', state.data);
                 })
                 .addCase(fetchMoviesByName.rejected, (state, action) => {
                     state.loading = false;
                     state.error = action.error.message;
-                    console.error('Error fetching data:', state.error);
+                    // console.error('Error fetching data:', state.error);
                 });
         }
     }
